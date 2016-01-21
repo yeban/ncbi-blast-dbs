@@ -3,7 +3,8 @@ require 'net/ftp'
 def download(url)
   file = File.basename(url)
   sh "wget -Nc #{url} && wget -Nc #{url}.md5 &&"\
-     " md5sum -c #{file}.md5 && tar xvf #{file}"
+     " md5sum -c #{file}.md5 && tar xvf #{file}"\
+     " || rm #{file} #{file}.md5"
 end
 
 def databases
