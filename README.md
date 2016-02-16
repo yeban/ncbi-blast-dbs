@@ -1,14 +1,15 @@
 ## Fast download BLAST databases from NCBI
 
 Database files (volumes) are downloaded in parallel: number of threads to use
-is determined automatically. MD5 checksum is verified and the database files
-extracted upon download. Database volumes are not downloaded in a particular
-order. Downloads are incremental, that is it will only download new data,
-provided the `.tar.gz` files have not been deleted.
+is determined automatically. MD5 checksum is verified and the database volume
+extracted upon download.  Database volumes are not downloaded in a particular
+order. The volumes are updated if a newer version is available on the server,
+or re-downloaded if corrupt. Aborted downloads are safely resumed.
 
-It is faster than NCBI's `update_blastdb.pl`. But unlike `update_blastdb.pl`,
-which is a pure Perl script, it delegates download and checksum verification
-to `wget` and `md5sum` and is thus not as universal.
+`ncbi-blast-dbs` is faster than NCBI's `update_blastdb.pl`. But unlike
+`update_blastdb.pl`, which is a pure Perl script, `ncbi-blast-dbs` delegates
+download and checksum verification to `wget` and `md5sum` and is thus not as
+universal.
 
 ### Installation
 
@@ -22,7 +23,12 @@ to `wget` and `md5sum` and is thus not as universal.
 
 #### Download all volumes of a BLAST database
 
-    ncbi-blast-dbs nr
+    ncbi-blast-dbs nt nr
+
+Databases are downloaded one after the other while volumes of each database
+are downloaded in parallel.
+
+    ncbi-blast-dbs nt nr
 
 NCBI expects users to submit their email address when downloading data from
 their FTP server. To comply with that, download as:
