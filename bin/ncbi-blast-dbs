@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
 require 'rake'
-import "#{__dir__}/../lib/ncbi-blast-dbs.rake"
+import "#{File.dirname(__FILE__)}/../lib/ncbi-blast-dbs.rake"
 app = Rake.application; app.init; app.load_imports; app.top_level
