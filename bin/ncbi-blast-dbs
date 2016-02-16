@@ -2,4 +2,12 @@
 
 require 'rake'
 import "#{File.dirname(__FILE__)}/../lib/ncbi-blast-dbs.rake"
-app = Rake.application; app.init; app.load_imports; app.top_level
+
+trap :INT do
+  puts "Quitting ..."
+  exit!
+end
+
+Rake.application.init 'ncbi-blast-dbs'
+Rake.application.load_imports
+Rake.application.top_level
