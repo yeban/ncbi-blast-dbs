@@ -1,10 +1,25 @@
 require 'net/ftp'
 
+# Downloads tarball at the given URL if a local copy does not exist, or if the
+# local copy is older than at the given URL, or if the local copy is corrupt.
 def download(url)
   file = File.basename(url)
-  sh "wget -Nc #{url} && wget -Nc #{url}.md5 &&"\
-     " md5sum -c #{file}.md5 && tar xvf #{file}"\
-     " || rm #{file} #{file}.md5"
+  # Download tarball if the local copy is older than at the given URL or fetch
+  # it for the first time.
+  sh "wget -N #{url}"
+  # Resume aborted download. Do nothing if the file is already fully retrieved
+  # (at the cost is a round trip to server).
+  sh "wget -c #{url}"
+
+  # Always download md5 and verify the tarball. Re-download tarball if corrupt;
+  # extract otherwise.
+  sh "wget #{url}.md5 && md5sum -c #{file}.md5" do |matched, _|
+    if !matched
+      sh "rm #{file} #{file}.md5"; download(url)
+    else
+      sh "tar xvf #{file}"
+    end
+  end
 end
 
 def databases
