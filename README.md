@@ -25,8 +25,8 @@ universal.
 
     ncbi-blast-dbs nt nr
 
-Databases are downloaded one after the other while volumes of each database
-are downloaded in parallel.
+Databases are downloaded one after the other. Volumes of each database are
+downloaded in parallel. Downloads are placed in the current directory.
 
 NCBI expects users to submit their email address when downloading data from
 their FTP server. To comply with that, download as:
