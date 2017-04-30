@@ -47,8 +47,13 @@ databases.each do |name, files|
   multitask(name => files.map { |file| task(file) { download(file) } })
 end
 
+# Taxonomy database is different from sequence databases.
+task :taxdump do
+  download 'ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz'
+end
+
 # List name of all databases that can be downloaded if executed without
 # any arguments.
 task :default do
-  puts databases.keys.join(', ')
+  puts databases.keys.push('taxdump').join(', ')
 end
