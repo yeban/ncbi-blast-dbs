@@ -15,6 +15,13 @@ universal.
 
     gem install ncbi-blast-dbs
 
+#### Note for macOS users
+
+If `md5sum` command is not present, you can install it using
+[`Homebrew`](https://brew.sh):
+
+    brew install md5sha1sum
+
 ### Usage
 
 #### List available BLAST databases
