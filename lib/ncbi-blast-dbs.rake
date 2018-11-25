@@ -6,19 +6,19 @@ def download(url)
   file = File.basename(url)
   # Resume an interrupted download or fetch the file for the first time. If
   # the file on the server is newer, then it is downloaded from start.
-  sh "wget -Nc #{url}"
+  sh "wget -Nc --no-verbose #{url}"
   # If the local copy is already fully retrieved, then the previous command
   # ignores the timestamp. So we check with the server again if the file on
   # the server is newer and if so download the new copy.
-  sh "wget -N #{url}"
+  sh "wget -N --no-verbose #{url}"
 
   # Immediately download md5 and verify the tarball. Re-download tarball if
   # corrupt; extract otherwise.
-  sh "wget #{url}.md5 && md5sum -c #{file}.md5" do |matched, _|
+  sh "wget --no-verbose #{url}.md5 && md5sum -c #{file}.md5" do |matched, _|
     if !matched
       sh "rm #{file} #{file}.md5"; download(url)
     else
-      sh "tar xvf #{file}"
+      sh "tar xf #{file}"
     end
   end
 end
