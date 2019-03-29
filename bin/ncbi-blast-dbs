@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rake'
-import "#{File.dirname(__FILE__)}/../lib/ncbi-blast-dbs.rake"
 
 trap :INT do
   puts "Quitting ..."
