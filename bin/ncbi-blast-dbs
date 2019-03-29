@@ -7,6 +7,14 @@ trap :INT do
   exit!
 end
 
-Rake.application.init 'ncbi-blast-dbs'
-Rake.application.load_imports
-Rake.application.top_level
+if ARGV.include? "http";
+  import "#{File.dirname(__FILE__)}/../lib/http-ncbi-blast-dbs.rake"
+  Rake.application.init 'http-ncbi-blast-dbs'
+  Rake.application.load_imports
+  Rake.application.top_level  
+else;
+  import "#{File.dirname(__FILE__)}/../lib/ncbi-blast-dbs.rake"
+  Rake.application.init 'ncbi-blast-dbs'
+  Rake.application.load_imports
+  Rake.application.top_level
+end
