@@ -41,6 +41,10 @@ def databases
 
   array_of_files = []
   body.each do |line|
+    # regex takes the raw http response, matches lines such as:
+    #    href="tsa_nt.06.tar.gz.md5">tsa_nt.06.tar.gz</a>
+    # Returns:
+    # tsa_nt.06.tar.gz
     filenames_and_newlines = line[/(^href=".*">)(.*tar.gz|.*md5)(<\/a>)$/, 2]
     array_of_files.append(filenames_and_newlines) unless filenames_and_newlines.nil?
   end
