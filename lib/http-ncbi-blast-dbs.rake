@@ -66,17 +66,17 @@ databases.each do |name, files|
   multitask(name => files.map { |file| task(file) { download(file, last.values.uniq) } })
 end
 
-# Taxonomy database is different from sequence databases.
-# task :taxdump do
-#   download 'ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz'
-# end
-
 # List name of all databases that can be downloaded if executed without
 # any arguments.
 task :default do
   databases
   puts databases.keys.push('taxdump').join(', ')
 end
+
+task :taxdump do
+  download('https://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz', "nil")
+end
+
 # Ruby being over my head, this is my quick-and-dirty way to trick it ignoring
 # "http" as a task rather than a specification. Happy for an expert to fix it up!
 task :http do
