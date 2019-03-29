@@ -25,6 +25,7 @@ def download(url, last_to_do)
     elsif file == last_to_do;
       sh "tar xfov #{file}"      
     else
+      # at least nr and nt tarballs have identical files .?al; unsure of others
       sh "tar xfov #{file} --exclude='*.?al' --exclude='taxdb*'"
     end
   end
@@ -49,6 +50,7 @@ def databases
     array_of_files.append(filenames_and_newlines) unless filenames_and_newlines.nil?
   end
 
+  # append the full path to file for downstream wget
   array_of_files.map! { |string| "".concat("/blast/db/", string ) }
   array_of_files.
     map { |file| File.join(host, file) }.
