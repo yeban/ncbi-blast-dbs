@@ -12,14 +12,26 @@ def download(url)
   # the server is newer and if so download the new copy.
   sh "wget -N --no-verbose #{url}"
 
-  # Immediately download md5 and verify the tarball. Re-download tarball if
-  # corrupt; extract otherwise.
-  sh "wget --no-verbose #{url}.md5 && md5sum -c #{file}.md5" do |matched, _|
-    if !matched
-      sh "rm #{file} #{file}.md5"; download(url)
-    else
-      sh "tar xf #{file}"
-    end
+  # Download Md5
+  sh "wget --no-verbose #{url}.md5"
+
+  # Verify the tarball using md5sum or md5
+  if system("which md5sum > /dev/null")
+    matched = system("md5sum -c #{file}.md5")
+  elsif system("which md5 > /dev/null")
+    md5_out = %x[md5 -q #{file}].chomp
+    md5_actual = File.read("#{file}.md5").split[0]
+    matched = md5_out == md5_actual
+  else
+    puts "Cannot find md5sum or md5. Please install md5sum or md5 and try again"
+    exit 1
+  end
+
+  # Re-download tarball if corrupt; extract otherwise.
+  if !matched
+    sh "rm #{file} #{file}.md5"; download(url)
+  else
+    sh "tar xf #{file}"
   end
 end
 

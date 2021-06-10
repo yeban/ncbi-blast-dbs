@@ -8,19 +8,12 @@ or re-downloaded if corrupt. Aborted downloads are safely resumed.
 
 `ncbi-blast-dbs` is faster than NCBI's `update_blastdb.pl`. But unlike
 `update_blastdb.pl`, which is a pure Perl script, `ncbi-blast-dbs` delegates
-download and checksum verification to `wget` and `md5sum` and is thus not as
-universal.
+download and checksum verification to `wget` and `md5sum` / `md5` and is thus
+not as universal.
 
 ### Installation
 
     gem install ncbi-blast-dbs
-
-#### Note for macOS users
-
-If `md5sum` command is not present, you can install it using
-[`Homebrew`](https://brew.sh):
-
-    brew install md5sha1sum
 
 ### Usage
 
