@@ -14,6 +14,6 @@ DESC
 
   s.files         = `git ls-files`.split
   s.require_paths = ['lib']
-  s.add_dependency('rake', '~> 10.3', '>= 10.3.2')
+  s.add_dependency('rake', '~> 13.0')
   s.executables   = ['ncbi-blast-dbs']
 end
